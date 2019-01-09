@@ -217,14 +217,14 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
 
 
 
-		var cmap_poverty = [{"label" : ">&nbsp;87.0", "lower" : 87.0, "fill" : '#91003f'},
-						{"label" : "75.0&nbsp;-&nbsp;87.0", "lower" : 75.0, "fill" : '#ce1256'},
-						{"label" : "62.0&nbsp;-&nbsp;75.0", "lower" : 62.0, "fill" : '#e7298a'},
-						{"label" : "50.0&nbsp;-&nbsp;62.0", "lower" : 50.0, "fill" : '#df65b0'},
-						{"label" : "37.0&nbsp;-&nbsp;50.0", "lower" : 37.0, "fill" : '#c994c7'},
-						{"label" : "25.0&nbsp;-&nbsp;37.0", "lower" : 25.0, "fill" : '#d4b9da'},
-						{"label" : "12.0&nbsp;-&nbsp;25.0", "lower" : 12.0, "fill" : '#e7e1ef'},
-						{"label" : "<&nbsp;12.0", "lower" : 0.0,  "fill" : '#f7f4f9'}];
+		var cmap_poverty = [{"label" : ">&nbsp;87.0", "lower" : 87.0, "fill" : '#990000'},
+						{"label" : "75.0&nbsp;-&nbsp;87.0", "lower" : 75.0, "fill" : '#d7301f'},
+						{"label" : "62.0&nbsp;-&nbsp;75.0", "lower" : 62.0, "fill" : '#ef6548'},
+						{"label" : "50.0&nbsp;-&nbsp;62.0", "lower" : 50.0, "fill" : '#fc8d59'},
+						{"label" : "37.0&nbsp;-&nbsp;50.0", "lower" : 37.0, "fill" : '#fdbb84'},
+						{"label" : "25.0&nbsp;-&nbsp;37.0", "lower" : 25.0, "fill" : '#fdd49e'},
+						{"label" : "12.0&nbsp;-&nbsp;25.0", "lower" : 12.0, "fill" : '#fee8c8'},
+						{"label" : "<&nbsp;12.0", "lower" : 0.0,  "fill" : '#fff7ec'}];
 
 		var cmap_density = [{"label" : ">&nbsp;87.0", "lower" : 87.0, "fill" : '#7a0177'},
 						{"label" : "75.0&nbsp;-&nbsp;87.0", "lower" : 75.0, "fill" : '#ae017e'},
@@ -262,14 +262,14 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
 						{"label" : "12.0&nbsp;-&nbsp;25.0", "lower" : 12.0, "fill" : '#fff7bc'},
 						{"label" : "<&nbsp;12.0", "lower" : 0.0,  "fill" : '#ffffe5'}];
 						  
-		var cmap_tphone = [{"label" : ">&nbsp;87.0", "lower" : 87.0, "fill" : '#b10026'},
-						{"label" : "75.0&nbsp;-&nbsp;87.0", "lower" : 75.0, "fill" : '#e31a1c'},
-						{"label" : "62.0&nbsp;-&nbsp;75.0", "lower" : 62.0, "fill" : '#fc4e2a'},
-						{"label" : "50.0&nbsp;-&nbsp;62.0", "lower" : 50.0, "fill" : '#fd8d3c'},
-						{"label" : "37.0&nbsp;-&nbsp;50.0", "lower" : 37.0, "fill" : '#feb24c'},
-						{"label" : "25.0&nbsp;-&nbsp;37.0", "lower" : 25.0, "fill" : '#fed976'},
-						{"label" : "12.0&nbsp;-&nbsp;25.0", "lower" : 12.0, "fill" : '#ffeda0'},
-						{"label" : "<&nbsp;12.0", "lower" : 0.0,  "fill" : '#ffffcc'}];
+		var cmap_tphone = [{"label" : ">&nbsp;87.0", "lower" : 87.0, "fill" : '#6e016b'},
+						{"label" : "75.0&nbsp;-&nbsp;87.0", "lower" : 75.0, "fill" : '#88419d'},
+						{"label" : "62.0&nbsp;-&nbsp;75.0", "lower" : 62.0, "fill" : '#8c6bb1'},
+						{"label" : "50.0&nbsp;-&nbsp;62.0", "lower" : 50.0, "fill" : '#8c96c6'},
+						{"label" : "37.0&nbsp;-&nbsp;50.0", "lower" : 37.0, "fill" : '#9ebcda'},
+						{"label" : "25.0&nbsp;-&nbsp;37.0", "lower" : 25.0, "fill" : '#bfd3e6'},
+						{"label" : "12.0&nbsp;-&nbsp;25.0", "lower" : 12.0, "fill" : '#e0ecf4'},
+						{"label" : "<&nbsp;12.0", "lower" : 0.0,  "fill" : '#f7fcfd'}];
 						  
 		var cmap_urban = [{"label" : ">&nbsp;87.0", "lower" : 87.0, "fill" : '#005824'},
 						{"label" : "75.0&nbsp;-&nbsp;87.0", "lower" : 75.0, "fill" : '#238b45'},
