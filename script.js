@@ -24,15 +24,6 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
 			position: 'bottomleft'
 		}).addTo(m);
 		
-		//base maps
-		var mapQuestAttr = 'Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; ';
-		var osmDataAttr = 'Basemap data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-		var mopt = {
-			url: 'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
-			options: {attribution:'Basemap data &copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}
-		  };
-		var mq = L.tileLayer(mopt.url,mopt.options);
-
 		var OpenCartoMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}'+ (L.Browser.retina ? '@2x.png' : '.png'),{
 				attribution:'Basemap data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | Basemap style &copy; <a href="https://carto.com/attributions">CARTO</a>',
 				subdomains: 'abcd',
@@ -40,10 +31,7 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
 				minZoom: 0
 		});
 			 
-		var OpenTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-			maxZoom: 17,
-			attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Basemap style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
-		});	
+		
 			
 		OpenCartoMap.addTo(m);
 
@@ -54,76 +42,28 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
 			//this is for adding a logo as needed
 			//holder ='<table><tr>' 
 			//logo = '<td rowspan=2><img class="logo" src="logo_laos.png"></img></td>';
-			//labels = "<td><h4>Poverty in Lao PDR</h4></td></tr><tr><td><p>Percentage of people in poverty by province and district: 2015</p></td></tr></table>";
-			labelsn = "<h4>Poverty in Lao PDR: 2015</h4><p>Percentage of people in poverty by province and district</p>";
+			//labels = "<td><h4>Poverty in Lao PDR</h4></td></tr><tr><td><p>Percentage of people in poverty by province/district: 2015</p></td></tr></table>";
+			labelsn = "<h4>Poverty in Lao PDR</h4><p>Percentage of people in poverty by province/district: 2015</p>";
 		 
 			div.innerHTML = labelsn;//holder + logo + labels;
 			return div;
 		};
 		ctitle.addTo(m);
-		
-	
-		
-		var jsonfile1 = 'data/district_pov.geojson';
-		var jsonfile2 = 'data/province_pov.geojson'; 
-		
-		
-		var district_lay = L.geoJSON(null, {onEachFeature: popUp, style: style}); 
-		$.getJSON(jsonfile1, function(data) {
-			district_lay.addData(data);
-			
-			
-		  });
-		var province_lay = L.geoJSON(null, {onEachFeature: popUp, style: style}); 
-		$.getJSON(jsonfile2, function(data) {
-			province_lay.addData(data);
-			
-			province_lay.addTo(m);
-			province_lay.on('data:loaded', function() {
-				if (!isMobile) {
-				  map.fitBounds(province_lay.getBounds(), {paddingTopLeft : [300, 100],
-													  paddingBottomRight : [50, 50]});
-				} else {
-				  map.fitBounds(province_lay.getBounds(), {padding : [100, 100]});
-				}
-			  }.bind(this));
-		  });
-		//province_lay.addTo(m);
-		//var district_lay = new L.GeoJSON.AJAX("data/district_pov.geojson",{onEachFeature:popUp,style:style});
-		//var province_lay = new L.GeoJSON.AJAX("data/province_pov.geojson",{onEachFeature:popUp,style:style}).addTo(m);
 
-		var baseMaps = {
-			"Open StreetMap": mq, 
-			"Carto BaseMap": OpenCartoMap,
-			"Open TopoMap": OpenTopoMap
-			};
+		var district_lay = new L.GeoJSON.AJAX("data/district_pov.geojson",{onEachFeature:popUp, style:styleD});
+		var province_lay = new L.GeoJSON.AJAX("data/province_pov.geojson",{onEachFeature:popUp,style:styleP}).addTo(m);
 
-		var groupedOverlays = {
-			"Admin Level": {
-				"Province": province_lay,
-				"District": district_lay        
-			}
-		};
-
-		var options = {
-			  // Make the "Admin Level" group exclusive (use radio inputs)
-			  exclusiveGroups: ["Admin Level"],
-			  // Show a checkbox next to non-exclusive group labels for toggling all
-			  groupCheckboxes: true,
-			  position: 'topleft'
-			};
-
-		// Use the custom grouped layer control, not "L.control.layers"
-		var layerControl = L.control.groupedLayers(baseMaps, groupedOverlays, options);
-			m.addControl(layerControl);
+		
 
 		function popUp(f,layer){
 			var out = [];
 			layer.on({
 				mouseover: highlightFeature,
 				mouseout: resetHighlight,
-				click: highlightFeature
+				click: onclick
 			});	
+			
+			
 		};
 
 		// Creates an info box on the map
@@ -149,7 +89,7 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
 			content += '<tr><td class="ditem">Electricity access (%)</td>         <td class="dval">'  +(props ? '' + (checkNull(props["Using_Elec"].toFixed(1))) : '85.6') + '</div>'+ '</td></tr>';
 			content += '<tr><td class="ditem">Own a phone (%)</td>         <td class="dval">'  +(props ? '' + (checkNull(props["Own_a_Phon"].toFixed(1))) : '91.3') + '</div>'+ '</td></tr>';
 			content += '<tr><td class="ditem">Poverty headcount (%)</td>         <td class="dval">'  +(props ? '' + (checkNull(props["Poverty_He"].toFixed(1))) : '24.8') + '</div>'+ '</td></tr>';
-			content += '<tr><td class="ditem">Poverty gap (%)</td>         <td class="dval">'  +(props ? '' + (checkNull(props["Poverty_Ga"].toFixed(1))) : '--') + '</div>'+ '</td></tr>';
+			content += '<tr><td class="ditem">Poverty gap (%)</td>         <td class="dval">'  +(props ? '' + (checkNull(props["Poverty_Ga"].toFixed(1))) : '6.0') + '</div>'+ '</td></tr>';
 			content += '<tr><td class="ditem">Poverty severity (%)</td>         <td class="dval">'  +(props ? '' + (checkNull(props["Poverty_Se"].toFixed(1))) : '--') + '</div>'+ '</td></tr>';
 			content += '</tbody></table>';
 			
@@ -157,11 +97,26 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
 			};
 			
 		info.addTo(m);
+		m.on('zoomend', function(){
+
+			if (m.getZoom() >= 7) {
+			  m.addLayer(district_lay);
+			  district_lay.bringToFront();
+			  //set style for province as 
+			  
+			  
+			} else {
+				m.removeLayer(district_lay);
+				
+			}
+
+  });
 		
 		function onclick(e){
 			var bounds = e.target.getBounds();
 			m.fitBounds(bounds);
-			highlightFeature(e);
+				
+			
 		};
 
 		function highlightFeature(e) {
@@ -169,15 +124,15 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
 			var layer = e.target;
 			layer.setStyle({
 				weight: 3,
-				color: 'black',
-				fillOpacity: 0.5
+				color: '#636363',
+				fillOpacity: 0.4
 			});
 			info.update(layer.feature.properties);
 		};
 
 		// This resets the highlight after hover moves away
 		function resetHighlight(e) {
-			province_lay.setStyle(style);
+			province_lay.setStyle(styleP);
 			district_lay.setStyle(style);
 			info.update();
 		};
@@ -214,7 +169,6 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
 		  }
 		  return val;
 		};
-
 
 
 		var cmap_poverty = [{"label" : ">&nbsp;87.0", "lower" : 87.0, "fill" : '#990000'},
